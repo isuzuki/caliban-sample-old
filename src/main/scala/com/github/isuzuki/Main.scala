@@ -17,10 +17,14 @@ object Main extends CatsApp with GenericSchema[Console with Clock] {
   // resolver
   val queries = Queries(
     () => Service.getCharacters,
-    args => Service.findCharacter(args.name),
+    args => Service.findCharacter(args),
+  )
+  val mutations = Mutations(
+    args => Task(Service.createCharacter(args)),
+    args => Task(Service.deleteCharacter(args)),
   )
 
-  val interpreter = GraphQL.graphQL(RootResolver(queries))
+  val interpreter = GraphQL.graphQL(RootResolver(queries, mutations))
 
   override def run(args: List[String]): ZIO[zio.ZEnv, Nothing, Int] =
     (for {

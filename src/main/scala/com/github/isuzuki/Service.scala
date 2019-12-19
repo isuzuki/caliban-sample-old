@@ -13,4 +13,13 @@ object Service {
 
   def findCharacter(name: String): Option[Character] =
     characters.find(_.name == name)
+
+  def createCharacter(name: String): Character = {
+    val character = Character(name)
+    characters.addOne(character)
+    character
+  }
+
+  def deleteCharacter(name: String): Boolean =
+    findCharacter(name).map(characters.subtractOne).isDefined
 }
