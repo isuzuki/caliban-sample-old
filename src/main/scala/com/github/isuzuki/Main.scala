@@ -24,14 +24,14 @@ object Main extends CatsApp with GenericSchema[Console with Clock] {
     args => Task(Service.deleteCharacter(args)),
   )
 
-  val interpreter = GraphQL.graphQL(RootResolver(queries, mutations))
+  val interpreter = GraphQL.graphQL(RootResolver(queries, mutations)).interpreter
 
   override def run(args: List[String]): ZIO[zio.ZEnv, Nothing, Int] =
     (for {
       _ <- BlazeServerBuilder[ExampleTask]
         .withHttpApp(
           Router[ExampleTask](
-            "/api/graphql" -> CORS(Http4sAdapter.makeRestService(interpreter)),
+            "/api/graphql" -> CORS(Http4sAdapter.makeHttpService(interpreter)),
           ).orNotFound,
         )
         .resource
