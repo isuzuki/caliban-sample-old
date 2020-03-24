@@ -4,7 +4,7 @@ version := "0.1"
 
 scalaVersion := "2.13.1"
 
-val calibanVersion = "0.4.1"
+val calibanVersion = "0.6.0"
 
 libraryDependencies ++= Seq(
   "com.github.ghostdogpr" %% "caliban" % calibanVersion,
