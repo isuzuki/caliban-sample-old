@@ -9,7 +9,8 @@ object Service {
     Character("R2-D2"),
   )
 
-  def getCharacters: List[Character] = characters.toList
+  def getCharacters: List[Character] =
+    characters.toList
 
   def findCharacter(name: String): Option[Character] =
     characters.find(_.name == name)
